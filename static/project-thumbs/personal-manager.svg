@@ -1,0 +1,13 @@
+<svg width="640" height="420" viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="420" rx="36" fill="#1F1B17"/>
+  <rect x="38" y="38" width="564" height="344" rx="28" fill="#F7F1E8"/>
+  <rect x="70" y="74" width="500" height="44" rx="16" fill="#E4D8C9"/>
+  <rect x="70" y="144" width="220" height="166" rx="22" fill="#EDE2D5"/>
+  <rect x="312" y="144" width="258" height="76" rx="22" fill="#FF6237"/>
+  <rect x="312" y="234" width="258" height="76" rx="22" fill="#D9CBBB"/>
+  <rect x="94" y="168" width="172" height="18" rx="9" fill="#D0C2B4"/>
+  <rect x="94" y="202" width="132" height="18" rx="9" fill="#D0C2B4"/>
+  <rect x="94" y="236" width="160" height="18" rx="9" fill="#D0C2B4"/>
+  <text x="72" y="338" fill="#1F1B17" font-family="Arial, sans-serif" font-size="30" font-weight="700">Personal Management App</text>
+  <text x="72" y="366" fill="#6D6358" font-family="Arial, sans-serif" font-size="18">notes / records / organization</text>
+</svg>

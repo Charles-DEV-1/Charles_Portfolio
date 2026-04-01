@@ -1,0 +1,14 @@
+<svg width="640" height="420" viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="420" rx="36" fill="#F0E3D4"/>
+  <rect x="38" y="38" width="564" height="344" rx="28" fill="#FFFDFC"/>
+  <rect x="70" y="74" width="500" height="44" rx="16" fill="#E7DDCF"/>
+  <rect x="70" y="146" width="150" height="152" rx="22" fill="#FF6237"/>
+  <rect x="240" y="146" width="330" height="70" rx="22" fill="#EDE3D7"/>
+  <rect x="240" y="228" width="330" height="70" rx="22" fill="#DCCFBE"/>
+  <circle cx="115" cy="192" r="24" fill="#F7F1E8"/>
+  <rect x="100" y="232" width="74" height="12" rx="6" fill="#F7F1E8"/>
+  <rect x="268" y="171" width="160" height="14" rx="7" fill="#D0C2B4"/>
+  <rect x="268" y="253" width="190" height="14" rx="7" fill="#C7B8A9"/>
+  <text x="72" y="338" fill="#1F1B17" font-family="Arial, sans-serif" font-size="30" font-weight="700">Social Media App</text>
+  <text x="72" y="366" fill="#6D6358" font-family="Arial, sans-serif" font-size="18">profiles / posts / engagement</text>
+</svg>

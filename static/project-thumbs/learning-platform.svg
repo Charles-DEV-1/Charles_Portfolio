@@ -1,0 +1,11 @@
+<svg width="640" height="420" viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="420" rx="36" fill="#F0E3D4"/>
+  <rect x="38" y="38" width="564" height="344" rx="28" fill="#FFFDFC"/>
+  <rect x="70" y="74" width="500" height="44" rx="16" fill="#E5DACD"/>
+  <rect x="70" y="142" width="160" height="176" rx="20" fill="#FF6237"/>
+  <rect x="250" y="142" width="140" height="82" rx="18" fill="#E8DED2"/>
+  <rect x="408" y="142" width="162" height="82" rx="18" fill="#D8CBBC"/>
+  <rect x="250" y="236" width="320" height="82" rx="18" fill="#EFE7DD"/>
+  <text x="72" y="338" fill="#1F1B17" font-family="Arial, sans-serif" font-size="30" font-weight="700">Learning Platform API</text>
+  <text x="72" y="366" fill="#6D6358" font-family="Arial, sans-serif" font-size="18">auth / progress / course data</text>
+</svg>

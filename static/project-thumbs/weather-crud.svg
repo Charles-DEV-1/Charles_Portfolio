@@ -1,0 +1,14 @@
+<svg width="640" height="420" viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="420" rx="36" fill="#1F1B17"/>
+  <rect x="38" y="38" width="564" height="344" rx="28" fill="#F7F1E8"/>
+  <rect x="70" y="74" width="500" height="44" rx="16" fill="#E5DACD"/>
+  <rect x="70" y="146" width="500" height="164" rx="26" fill="#EDE3D7"/>
+  <circle cx="180" cy="214" r="44" fill="#FF6237"/>
+  <circle cx="230" cy="214" r="28" fill="#F7F1E8"/>
+  <circle cx="274" cy="214" r="32" fill="#D8CBBC"/>
+  <rect x="340" y="176" width="168" height="18" rx="9" fill="#D0C2B4"/>
+  <rect x="340" y="210" width="132" height="18" rx="9" fill="#D0C2B4"/>
+  <rect x="340" y="244" width="104" height="18" rx="9" fill="#D0C2B4"/>
+  <text x="72" y="338" fill="#1F1B17" font-family="Arial, sans-serif" font-size="30" font-weight="700">Weather CRUD App</text>
+  <text x="72" y="366" fill="#6D6358" font-family="Arial, sans-serif" font-size="18">saved cities / API data / state</text>
+</svg>
