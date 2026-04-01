@@ -631,6 +631,36 @@ code {
   gap: 1rem;
 }
 
+.contact-form input,
+.contact-form textarea,
+.contact-input {
+  width: 100%;
+  border: 1px solid rgba(32, 28, 24, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--ink);
+  padding: 0.95rem 1rem;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.contact-form textarea,
+.contact-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.contact-input:focus {
+  outline: none;
+  border-color: rgba(255, 98, 55, 0.5);
+  box-shadow: 0 0 0 4px rgba(255, 98, 55, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+}
+
 .field {
   display: grid;
   gap: 0.5rem;

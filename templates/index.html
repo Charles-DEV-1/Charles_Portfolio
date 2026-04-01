@@ -56,7 +56,9 @@
               <a class="button button-primary" href="#projects">See projects</a>
               <a class="button button-secondary" href="#contact">Contact me</a>
               {% if resume_available %}
-              <a class="button button-secondary" href="/resume">Download resume</a>
+              <a class="button button-secondary" href="/resume"
+                >Download resume</a
+              >
               {% else %}
               <span class="button button-secondary button-disabled"
                 >Resume pending</span
@@ -217,24 +219,29 @@
             <p>Send a message and I will get back to you.</p>
           </div>
 
-          <form class="contact-form" id="contactForm" data-reveal>
-            <label class="field">
-              <span>Full name</span>
-              <input type="text" id="fullName" name="fullName" required />
-            </label>
-
-            <label class="field">
-              <span>Email address</span>
-              <input type="email" id="email" name="email" required />
-            </label>
-
-            <label class="field">
-              <span>Message</span>
-              <textarea id="message" name="message" required></textarea>
-            </label>
-
+          <form id="contact-form" class="contact-form" data-reveal>
+            <input
+              class="contact-input"
+              type="text"
+              name="fullName"
+              placeholder="Your Name"
+              required
+            />
+            <input
+              class="contact-input"
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              required
+            />
+            <textarea
+              class="contact-input contact-textarea"
+              name="message"
+              placeholder="Your Message"
+              required
+            ></textarea>
             <button class="button button-primary submit-button" type="submit">
-              Send message
+              Send Message
             </button>
             <p class="form-message" id="formMessage" aria-live="polite"></p>
           </form>
@@ -254,7 +261,91 @@
         </div>
       </div>
     </footer>
+    <!-- Add this right before closing </body> tag -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
 
+    <script type="text/javascript">
+      // Initialize EmailJS
+      (function () {
+        emailjs.init({
+          publicKey: "DCmjErdEP-oGG8Nuc", // ← PUT YOUR REAL PUBLIC KEY
+        });
+      })();
+
+      // Handle form submission
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("contact-form");
+
+        if (form) {
+          form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const formMessage = document.getElementById("formMessage");
+            const showFormMessage = (message, type) => {
+              if (!formMessage) return;
+
+              formMessage.textContent = message;
+              formMessage.className = `form-message is-visible is-${type}`;
+
+              if (type === "success") {
+                setTimeout(function () {
+                  formMessage.className = "form-message";
+                  formMessage.textContent = "";
+                }, 5000);
+              }
+            };
+
+            // Get form data
+            const fullName = form.querySelector('[name="fullName"]').value;
+            const email = form.querySelector('[name="email"]').value;
+            const message = form.querySelector('[name="message"]').value;
+
+            // Show sending status
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Sending...";
+            submitBtn.disabled = true;
+
+            // Send via EmailJS
+            emailjs
+              .send(
+                "service_bccz1j9", // ← PUT YOUR REAL SERVICE ID
+                "template_1eeb196", // ← PUT YOUR REAL TEMPLATE ID
+                {
+                  fullName: fullName,
+                  email: email,
+                  message: message,
+                },
+              )
+              .then(
+                function (response) {
+                  console.log("SUCCESS!", response); // Debug
+                  showFormMessage(
+                    "Message sent successfully! I will get back to you soon.",
+                    "success",
+                  );
+                  form.reset();
+                  submitBtn.innerText = originalText;
+                  submitBtn.disabled = false;
+                },
+                function (error) {
+                  console.log("FAILED...", error); // Debug
+                  showFormMessage(
+                    "Failed to send message. Please try again.",
+                    "error",
+                  );
+                  submitBtn.innerText = originalText;
+                  submitBtn.disabled = false;
+                },
+              );
+          });
+        } else {
+          console.error("Form with id 'contact-form' not found");
+        }
+      });
+    </script>
     <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
   </body>
 </html>
