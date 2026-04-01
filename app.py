@@ -1,4 +1,5 @@
 from datetime import datetime
+import threading
 import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -165,54 +166,39 @@ def download_resume():
     )
 
 
-@app.route("/api/contact", methods=["POST"])
+def send_email_async(full_name, email, message):
+    """Send email in background"""
+    thread = threading.Thread(target=send_email, args=(full_name, email, message))
+    thread.daemon = True
+    thread.start()
+    print("Thread started")  # Debug line
+
+# Your contact endpoint
+@app.route('/api/contact', methods=['POST'])
 def handle_contact():
-    data = request.get_json(silent=True) or {}
-
-    if not all([data.get("fullName"), data.get("email"), data.get("message")]):
-        return jsonify({"status": "error", "message": "Missing required fields"}), 400
-
-    if "@" not in data.get("email", ""):
-        return jsonify({"status": "error", "message": "Invalid email address"}), 400
-
-    full_name = data["fullName"].strip()
-    email = data["email"].strip()
-    message = data["message"].strip()
-
-    if not EMAIL_ADDRESS or not EMAIL_PASSWORD:
-        return (
-            jsonify(
-                {
-                    "status": "error",
-                    "message": "Email service is not configured yet.",
-                }
-            ),
-            500,
-        )
-
     try:
-        send_email(full_name, email, message)
-    except Exception as exc:
-        print(f"Contact form error: {exc}")
-        return (
-            jsonify(
-                {
-                    "status": "error",
-                    "message": "Failed to send message. Please try again later.",
-                }
-            ),
-            500,
-        )
-
-    return (
-        jsonify(
-            {
-                "status": "success",
-                "message": "Message received. I will get back to you soon.",
-            }
-        ),
-        200,
-    )
+        data = request.json
+        print(f"Received data: {data}")  # Debug line
+        
+        full_name = data.get('fullName')
+        email = data.get('email')
+        message = data.get('message')
+        
+        # Validate inputs
+        if not all([full_name, email, message]):
+            return jsonify({'error': 'All fields are required'}), 400
+        
+        # Send email in background
+        send_email_async(full_name, email, message)
+        
+        # Return immediately
+        return jsonify({
+            'message': 'Message sent successfully!',
+            'status': 'success'
+        }), 200
+    except Exception as e:
+        print(f"Error in handle_contact: {e}")
+        return jsonify({'error': str(e)}), 500
 
 
 def send_email(full_name, sender_email, message_content):
