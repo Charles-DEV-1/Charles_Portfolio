@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ profile.name }} | {{ profile.role }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/site.css') }}"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-row">
+        <a href="#home" class="brand">{{ profile.short_name }}</a>
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="siteNav"
+        >
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="site-nav" id="siteNav">
+          <a href="#home" data-nav-link="home">Home</a>
+          <a href="#about" data-nav-link="about">About</a>
+          <a href="#projects" data-nav-link="projects">Projects</a>
+          <a href="#contact" data-nav-link="contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="container hero-grid">
+          <div class="hero-copy" data-reveal>
+            <p class="eyebrow">{{ profile.eyebrow }}</p>
+            <h1 class="hero-title">
+              {{ profile.headline }}
+              <span>Built with calm neutrals and one sharp accent.</span>
+            </h1>
+            <p class="hero-text">{{ profile.summary }}</p>
+
+            <div class="hero-actions">
+              <a class="button button-primary" href="#projects">See projects</a>
+              <a class="button button-secondary" href="#contact">Contact me</a>
+              {% if resume_available %}
+              <a class="button button-secondary" href="/resume">Download resume</a>
+              {% else %}
+              <span class="button button-secondary button-disabled"
+                >Resume pending</span
+              >
+              {% endif %}
+            </div>
+
+            <div class="social-row">
+              {% for social in socials %} {% if social.url %}
+              <a
+                class="social-pill"
+                href="{{ social.url }}"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="{{ social.name }}"
+              >
+                <i class="{{ social.icon }}"></i>
+                <span>{{ social.name }}</span>
+              </a>
+              {% else %}
+              <span class="social-pill social-pill-muted">
+                <i class="{{ social.icon }}"></i>
+                <span>{{ social.name }} pending</span>
+              </span>
+              {% endif %} {% endfor %}
+            </div>
+          </div>
+
+          <aside class="portrait-panel" data-reveal>
+            <div class="portrait-frame">
+              <img
+                src="{{ url_for('static', filename=profile.profile_image) }}"
+                alt="{{ profile.name }}"
+              />
+            </div>
+            <div class="portrait-copy">
+              <p class="portrait-label">{{ profile.role }}</p>
+              <p class="portrait-location">{{ profile.location }}</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section section-soft" id="about">
+        <div class="container about-grid">
+          <article class="statement-card" data-reveal>
+            <p class="eyebrow">About</p>
+            <h2>Cleaner layout, stronger first impression.</h2>
+            <p>{{ profile.about }}</p>
+          </article>
+
+          <div class="skills-panel" data-reveal>
+            <p class="eyebrow">Core skills</p>
+            <div class="skill-grid">
+              {% for group in skill_groups %}
+              <article class="skill-card">
+                <h3>{{ group.title }}</h3>
+                <ul>
+                  {% for item in group["items"] %}
+                  <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </article>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="container">
+          <div class="section-head" data-reveal>
+            <p class="eyebrow">Selected projects</p>
+          </div>
+
+          <div class="projects-carousel" data-reveal>
+            <button
+              class="carousel-button"
+              type="button"
+              aria-label="Scroll projects left"
+              data-carousel-prev
+            >
+              &lt;
+            </button>
+
+            <div class="projects-track" data-projects-track>
+              {% for project in projects %}
+              <article class="project-card">
+                <div class="project-thumb">
+                  <img
+                    src="{{ url_for('static', filename=project.image) }}"
+                    alt="{{ project.title }} preview"
+                  />
+                </div>
+                <div class="project-body">
+                  <div class="project-topline">
+                    <span class="project-link-kind">Project</span>
+                    <span class="project-arrow">{{ loop.index }}</span>
+                  </div>
+                  <h3>{{ project.title }}</h3>
+                  <p>{{ project.summary }}</p>
+                  <div class="project-tags">
+                    {% for item in project.stack %}
+                    <span>{{ item }}</span>
+                    {% endfor %}
+                  </div>
+                  <div class="project-actions">
+                    {% if project.repo_url %}
+                    <a
+                      class="project-action"
+                      href="{{ project.repo_url }}"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      GitHub
+                    </a>
+                    {% else %}
+                    <span class="project-action project-action-muted">
+                      GitHub pending
+                    </span>
+                    {% endif %} {% if project.live_url %}
+                    <a
+                      class="project-action project-action-live"
+                      href="{{ project.live_url }}"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Live
+                    </a>
+                    {% else %}
+                    <span class="project-action project-action-muted">
+                      Live pending
+                    </span>
+                    {% endif %}
+                  </div>
+                </div>
+              </article>
+              {% endfor %}
+            </div>
+
+            <button
+              class="carousel-button"
+              type="button"
+              aria-label="Scroll projects right"
+              data-carousel-next
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-soft" id="contact">
+        <div class="container contact-shell">
+          <div class="contact-copy" data-reveal>
+            <p class="eyebrow">Contact</p>
+            <h2>Have a project or role in mind?</h2>
+            <p>Send a message and I will get back to you.</p>
+          </div>
+
+          <form class="contact-form" id="contactForm" data-reveal>
+            <label class="field">
+              <span>Full name</span>
+              <input type="text" id="fullName" name="fullName" required />
+            </label>
+
+            <label class="field">
+              <span>Email address</span>
+              <input type="email" id="email" name="email" required />
+            </label>
+
+            <label class="field">
+              <span>Message</span>
+              <textarea id="message" name="message" required></textarea>
+            </label>
+
+            <button class="button button-primary submit-button" type="submit">
+              Send message
+            </button>
+            <p class="form-message" id="formMessage" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <p>{{ profile.name }} - {{ current_year }}</p>
+        <div class="footer-links">
+          {% for social in socials %} {% if social.url %}
+          <a href="{{ social.url }}" target="_blank" rel="noreferrer">
+            {{ social.name }}
+          </a>
+          {% endif %} {% endfor %}
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
+  </body>
+</html>
