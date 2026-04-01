@@ -1,5 +1,4 @@
 from datetime import datetime
-import threading
 import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -166,20 +165,10 @@ def download_resume():
     )
 
 
-def send_email_async(full_name, email, message):
-    """Send email in background"""
-    thread = threading.Thread(target=send_email, args=(full_name, email, message))
-    thread.daemon = True
-    thread.start()
-    print("Thread started")  # Debug line
-
-# Your contact endpoint
 @app.route('/api/contact', methods=['POST'])
 def handle_contact():
     try:
         data = request.json
-        print(f"Received data: {data}")  # Debug line
-        
         full_name = data.get('fullName')
         email = data.get('email')
         message = data.get('message')
@@ -188,68 +177,18 @@ def handle_contact():
         if not all([full_name, email, message]):
             return jsonify({'error': 'All fields are required'}), 400
         
-        # Send email in background
-        send_email_async(full_name, email, message)
+        # Optional: Save to database or log
+        print(f"Contact form received from: {full_name} ({email})")
         
-        # Return immediately
+        # Just return success - EmailJS handles the actual email
         return jsonify({
             'message': 'Message sent successfully!',
             'status': 'success'
         }), 200
+        
     except Exception as e:
-        print(f"Error in handle_contact: {e}")
+        print(f"Error: {e}")
         return jsonify({'error': str(e)}), 500
-
-
-def send_email(full_name, sender_email, message_content):
-    subject = f"New Portfolio Contact: {full_name}"
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    html_body = f"""
-    <html>
-      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #2a241d;">
-        <h2 style="color: #ff6237;">New Contact Form Submission</h2>
-        <p><strong>Name:</strong> {full_name}</p>
-        <p><strong>Email:</strong> <a href="mailto:{sender_email}">{sender_email}</a></p>
-        <div style="margin-top: 20px; padding: 16px; background: #f7efe4; border-left: 4px solid #ff6237; border-radius: 8px;">
-          <p style="margin: 0;">{message_content.replace(chr(10), "<br>")}</p>
-        </div>
-        <p style="margin-top: 20px; color: #6d6358; font-size: 12px;">Timestamp: {timestamp}</p>
-      </body>
-    </html>
-    """
-
-    text_body = f"""
-New Contact Form Submission
-
-Name: {full_name}
-Email: {sender_email}
-
-Message:
-{message_content}
-
-Timestamp: {timestamp}
-    """.strip()
-
-    message = MIMEMultipart("alternative")
-    message["Subject"] = subject
-    message["From"] = EMAIL_ADDRESS
-    message["To"] = RECIPIENT_EMAIL
-    message["Reply-To"] = sender_email
-    message.attach(MIMEText(text_body, "plain"))
-    message.attach(MIMEText(html_body, "html"))
-
-    try:
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
-            server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-            server.send_message(message)
-    except smtplib.SMTPAuthenticationError as exc:
-        print(f"Email authentication failed: {exc}")
-        raise Exception("Email authentication failed") from exc
-    except smtplib.SMTPException as exc:
-        print(f"SMTP error: {exc}")
-        raise Exception("Email sending failed") from exc
 
 
 @app.route("/api/health", methods=["GET"])
