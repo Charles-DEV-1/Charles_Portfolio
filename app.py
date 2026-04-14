@@ -112,6 +112,7 @@ PROJECTS = [
         "image": "project-thumbs/image.png",
         "stack": ["Flask", "SQLAlchemy", "SQLite", "HTML"],
         "repo_url": "https://github.com/Charles-DEV-1/Event-management-app",
+        "live_url": "https://event-management-app-3n95.onrender.com",
     },
     {
         "title": "LogBook",
@@ -123,6 +124,7 @@ PROJECTS = [
         "image": "project-thumbs/logbook.png",
         "stack": ["Flask", "SQLAlchemy", "Mail", "Uploads"],
         "repo_url": "https://github.com/Charles-DEV-1/LogBook",
+        "live_url": "https://logbook-2eo6.onrender.com",
     },
     {
         "title": "Result Processing App",
@@ -135,6 +137,7 @@ PROJECTS = [
         "image": "project-thumbs/result-processing.png",
         "stack": ["Python", "Flask", "MySQL", "Reports"],
         "repo_url": "https://github.com/Charles-DEV-1/Result-Processing-System",
+        "live_url": 
         
     },
 ]
