@@ -137,7 +137,7 @@ PROJECTS = [
         "image": "project-thumbs/result-processing.png",
         "stack": ["Python", "Flask", "MySQL", "Reports"],
         "repo_url": "https://github.com/Charles-DEV-1/Result-Processing-System",
-        "live_url": 
+        "live_url": "https://result-processing-system-3hup.onrender.com",
         
     },
 ]
